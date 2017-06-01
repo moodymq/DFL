@@ -1,20 +1,26 @@
 # DFL
 Performs DiNardo-Fortin-Lemieux decomposition in R. Standard errors are bootstrapped.
 
-This code implements the DiNardo-Fortin-Lemieux decompostion from DFL (1996). DFL analysis takes a variable of interest for
-two groups (A and B), then asks what the distribution of the variable of interest for Group B would look like if members of
-Group B had the same observables as Group A.
+This code implements the DiNardo-Fortin-Lemieux decompostion from DFL (1996) in R. DFL analysis takes a variable of interest for two groups (A and B), then asks what the distribution of the variable of interest for Group B would look like if members of Group B had the same observables as Group A.
 
-The dfl function includes indicies so it can be called through from a bootstrap for standard deviations. "formula"
-contains the grouping variable and the observables in the form of "grouping ~ observables." For example, if we wanted
-see how much women would make if they had the the same experience, years of education, and earned MBAs at the same rate as men,
-we could use the following code:
+## Arguments
+**formula**   The variable that is used to decompose your variable of interest (e.g., male and female) and the observables. Group A is entered as 0 and Group B is entered as 1. It is entered as an R formula with the decomposition variable depended on the observatbles. For example, if we wanted to see how much women would make if they had the the same experience, years of education, and earned MBAs at the same rate as men, we could use the following formula:
+gender~experience+yearsofeducation+MBA
 
-results <- boot(data=teachers_mm, statistic=dfl, 
-                R=10, formula=gendercode~experience+yearsofeducation+MBA, varofint = "annualsalary")
-outputMatrix <- data.frame(results$t0[1:9], c(0,0,0,sd(results$t[,4]),
-                                              sd(results$t[,5]),sd(results$t[,6]),0,0,0))
-colnames(outputMatrix) <- c("quartile","se")
+**data**    The dataset.
 
-OutputMatrix has the quartile cutoffs for men in the first 3 rows and for women in the last 3 rows. The middle 3 rows contain
-the counterfactual women's distribution. These three have standard errors calculated from the bootstrap.
+**varofint**    The Variable of interest in the analysis.
+
+**pctile**    (Optional) The percentiles you want reported from the distributions. It defaults to quarties (25th, 50th, and 75th percentiles). Needs to be entered as a value between 0 and 1.
+
+**breps**   (Optional) The number of samples to use in a bootstrap. The default is 1000.
+
+**kernel**    (Optional) The kernal to be used in creating the distributions. Defaults to Gaussian.
+
+**Sensitivity**   (Optional) Used in finding the the percentiles. Defaults to .01. How close an estimate needs to be to the actual value before tesing individual "steps."
+
+**Step**    (Optional) The code looking for percentiles will test values at every "step" to find the value of the variable of interest which most closely divides the distribtion of the variable of interest into the correct percentile.
+
+**dif_tol**   (Optional) Passed to integrate.xy. Use a lower value if you get the following error:
+ Error in seq.default(a, length = max(0, b - a - 1)) : 
+  length must be non-negative number 
