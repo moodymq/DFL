@@ -1,6 +1,5 @@
 library(plyr)
 library(doBy)
-library(foreign)
 library(iterators)
 library(boot)
 library(sfsmisc)
