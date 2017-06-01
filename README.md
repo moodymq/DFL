@@ -3,6 +3,8 @@ Performs DiNardo-Fortin-Lemieux decomposition in R. Standard errors are bootstra
 
 This code implements the DiNardo-Fortin-Lemieux decompostion from DFL (1996) in R. DFL analysis takes a variable of interest for two groups (A and B), then asks what the distribution of the variable of interest for Group B would look like if members of Group B had the same observables as Group A.
 
+This code returns the relevant percentiles for the factual distributions of Groups A and B, as well as the counterfactual distribution of Group B. The output chart is ordered as: Group A, counterfactual Group B, Group B. In addition, it uses bootstrap methods to calcualte standard errors for the coefficients on the counterfactual distribution.
+
 ## Arguments
 **formula**   The variable that is used to decompose your variable of interest (e.g., male and female) and the observables. Group A is entered as 0 and Group B is entered as 1. It is entered as an R formula with the decomposition variable depended on the observatbles. For example, if we wanted to see how much women would make if they had the the same experience, years of education, and earned MBAs at the same rate as men, we could use the following formula:
 gender~experience+yearsofeducation+MBA
