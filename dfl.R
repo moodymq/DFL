@@ -4,11 +4,12 @@ library(iterators)
 library(boot)
 library(sfsmisc)
 
-dfl <- function(formula, data, varofint, pctile = c(.25, .5, .75), breps = 1000, kernel = "gaussian", Sensitivity = 0.01,
+dfl <- function(data, varofint, groups, observables, pctile = c(.25, .5, .75), breps = 1000, kernel = "gaussian", Sensitivity = 0.01,
                 Step = 0.001, dif_tol = 2e-10) {
   if(any(pctile < 0) | any(pctile > 1)) stop("Quartile must be between 0 and 1")
   num_pcts <- length(pctile)
   pctile <- sort(pctile)
+  formula <- reformulate(observables, groups)
 
   find_break <- function(prob, x, y, theStart = min(x), theEnd = max(x), theSensitivity = Sensitivity, theStep = Step,
                          cumDist = 0){
