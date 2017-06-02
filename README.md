@@ -30,5 +30,5 @@ gender~experience+yearsofeducation+MBA
  Error in seq.default(a, length = max(0, b - a - 1)) : 
   length must be non-negative number 
 
-Sample call:
+## Sample call:
 dfl(MyData, annualsalary, "gender", c("experience", yearsofed", "MBA"), pctile = (.1, .25, .5, .75, .9), breps = 100)
