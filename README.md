@@ -14,7 +14,7 @@ gender~experience+yearsofeducation+MBA
 
 **groups**    The variable used to decompose the variable of interest. Group A is enetered as 0, group B is entered as 1. Must be entered as a string.
 
-**observables**    The observables in the system. For example, if we wanted to see how much women would earn if they had the same experience and year of education as men and completed MBAs at the same rate, our observables would be experience, yearsofed, and MBA. They need to be entered as a vector of strings (i.e., c("experience", "yearsofed", "MBA")).
+**observables**    The observables in the system. For example, if we wanted to see how much women would earn if they had the same experience and year of education as men and completed MBAs at the same rate, our observables would be the variables experience, yearsofed, and MBA. They need to be entered as a vector of strings (i.e., c("experience", "yearsofed", "MBA")).
 
 **pctile**    (Optional) The percentiles you want reported from the distributions. It defaults to quarties (25th, 50th, and 75th percentiles). Needs to be entered as a value between 0 and 1.
 
