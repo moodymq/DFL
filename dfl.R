@@ -40,11 +40,11 @@ dfl <- function(formula, data, varofint, pctile = c(.25, .5, .75), breps = 1000,
     probit <- glm(formula, family = binomial(link = "probit"), 
                   data = d)
     d$phat <- predict.glm(probit, type="response")
-    d$phat[d$gendercode2 == 0] <- NA
+    d$phat[d[which(colnames(d) == groups)]==0] <- NA
     
     d$weights <- (1-d$phat)/d$phat
     
-    d$weights[d$gendercode2==0] <- NA
+    d$weights[d[which(colnames(d) == groups)]==0] <- NA
     
     d$weights <- d$weights/sum(d$weights,na.rm = TRUE)
     
