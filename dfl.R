@@ -8,7 +8,8 @@ dfl <- function(formula, data, varofint, pctile = c(.25, .5, .75), breps = 1000,
                 Step = 0.001, dif_tol = 2e-10) {
   if(any(pctile < 0) | any(pctile > 1)) stop("Quartile must be between 0 and 1")
   num_pcts <- length(pctile)
-  
+  pctile <- sort(pctile)
+
   find_break <- function(prob, x, y, theStart = min(x), theEnd = max(x), theSensitivity = Sensitivity, theStep = Step,
                          cumDist = 0){
     if(prob == 0) return(theStart)
@@ -64,6 +65,11 @@ dfl <- function(formula, data, varofint, pctile = c(.25, .5, .75), breps = 1000,
   outputMatrix <- data.frame(results$t0[1:num_rows], c(rep(0, num_pcts), sapply(as.data.frame(results$t[,seq(num_pcts + 1, 2*num_pcts)]), sd),
                                                        rep(0, num_pcts)))
   colnames(outputMatrix) <- c("x","se")
+  
+  rowHeaders <- paste(all.vars(formula[[2]]), c(" = 0", " = 1, counterfactual", " = 1"), sep = "")
+  rowHeaders <- as.vector(sapply(rowHeaders, paste, pctile, sep = "; Percentile = "))
+  
+  rownames(outputMatrix) <- rowHeaders
   
   outputMatrix
 }
